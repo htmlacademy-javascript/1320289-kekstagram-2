@@ -1,4 +1,12 @@
 import {
+  getNumberInRange,
+  getRandomArrayElement,
+  getRandomNumberInRange,
+  getRandomInteger,
+  getSequentialNumbers,
+} from '../helpers/helpers';
+
+import {
   COMMENTS,
   PHOTOS_COUNT,
   PHOTO_IDS_RANGE,
@@ -6,13 +14,9 @@ import {
   LIKES_RANGE,
   COMMENTS_COUNT_RANGE,
   COMMENT_AVATARS_RANGE,
-  getData,
-  getNumberInRange,
-  getRandomArrayElement,
-  getRandomNumberInRange,
-  getRandomInteger,
-  getSequentialNumbers,
-} from '../helpers';
+} from '../helpers/consts';
+
+import { getData } from '../helpers/fetchData';
 
 const { comments, emails } = await getData(COMMENTS_COUNT_RANGE.MAX);
 
