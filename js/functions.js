@@ -51,3 +51,32 @@ extractNmbersFromString('а я томат'); // NaN
 extractNmbersFromString(2023); // 2023
 extractNmbersFromString(-1); // 1
 extractNmbersFromString(1.5); // 15
+
+const getTimeInMinutes = (time) => {
+  const [hours, minutes] = time.split(':').map(Number);
+  const timeInMinutes = hours * 60 + minutes;
+  return timeInMinutes;
+};
+
+export const isMeetingWithinWorkday = (
+  workDayStart,
+  workDayEnd,
+  meetingStart,
+  meetingDuration,
+) => {
+  const workDayStartMinutes = getTimeInMinutes(workDayStart);
+  const workDayEndMinutes = getTimeInMinutes(workDayEnd);
+  const meetingEndMinutes = getTimeInMinutes(meetingStart) + meetingDuration;
+  const meetingStartMinutes = getTimeInMinutes(meetingStart);
+
+  return (
+    meetingStartMinutes >= workDayStartMinutes &&
+    meetingEndMinutes <= workDayEndMinutes
+  );
+};
+
+isMeetingWithinWorkday('08:00', '17:30', '14:00', 90); // true
+isMeetingWithinWorkday('8:0', '10:0', '8:0', 120); // true
+isMeetingWithinWorkday('08:00', '14:30', '14:00', 90); // false
+isMeetingWithinWorkday('14:00', '17:30', '08:0', 90); // false
+isMeetingWithinWorkday('8:00', '17:30', '08:00', 900); // false
