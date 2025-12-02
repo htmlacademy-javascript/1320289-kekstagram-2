@@ -1,6 +1,6 @@
-export const PHOTOS_COUNT = 25;
+export const PICTURES_COUNT = 25;
 
-export const PHOTO_IDS_RANGE = {
+export const PICTURE_IDS_RANGE = {
   MIN: 1,
   MAX: 25,
 };
