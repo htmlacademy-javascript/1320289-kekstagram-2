@@ -1,30 +1,27 @@
 import { PICTURES_COUNT } from '../../helpers/consts';
 import { createPicturesData } from '../data';
 import { renderFullImage } from './full-image';
-import { onThumbnailClick, openGalleryModal } from './gallery-modal';
-import { renderThumbnails } from './thumbnails';
+import { openGalleryModal } from './gallery-modal';
+import { renderThumbnails, onThumbnailClick } from './thumbnails';
 
-const imageDataMap = new WeakMap();
+const picturesData = createPicturesData(PICTURES_COUNT);
 
 const thumbnailClickHandler = (element) => {
-  const thumbnail = imageDataMap.get(element);
+  const thumbnailId = Number(element.dataset.id);
+  const thumbnailData = picturesData.find(
+    (picture) => picture.id === thumbnailId,
+  );
 
-  if (thumbnail) {
-    renderFullImage(thumbnail);
+  if (thumbnailData) {
+    renderFullImage(thumbnailData);
     openGalleryModal();
   }
 };
 
-const attachDataToElements = (elements, array) => {
-  elements.forEach((element, index) => imageDataMap.set(element, array[index]));
-};
-
 const initGallery = () => {
-  const picturesData = createPicturesData(PICTURES_COUNT);
   onThumbnailClick(thumbnailClickHandler);
 
-  const thumbnails = renderThumbnails(picturesData);
-  attachDataToElements(thumbnails, picturesData);
+  renderThumbnails(picturesData);
 };
 
 export { initGallery };

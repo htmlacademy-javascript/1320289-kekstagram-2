@@ -1,5 +1,4 @@
 import { renderComments } from './comments';
-import { galleryModal } from './selectors';
 
 const hideSocial = () => {
   const comments = document.querySelector('.social__comment-count');
@@ -9,6 +8,7 @@ const hideSocial = () => {
 };
 
 const renderFullImage = (thumbnail) => {
+  const galleryModal = document.querySelector('.big-picture');
   const img = galleryModal.querySelector('.big-picture__img img');
   const description = galleryModal.querySelector('.social__caption');
   const likes = galleryModal.querySelector('.likes-count');
@@ -18,15 +18,16 @@ const renderFullImage = (thumbnail) => {
   const commentsShowCount = galleryModal.querySelector(
     '.social__comment-shown-count',
   );
+
   // Заменить на реальное количество
-  const COMMENTS_SHOW_COUNT = thumbnail.comments.length;
+  const commentsShowCountValue = thumbnail.comments.length;
 
   img.src = thumbnail.url;
   img.alt = thumbnail.description;
   description.textContent = thumbnail.description;
   likes.textContent = thumbnail.likes;
   commentsCount.textContent = thumbnail.comments.length;
-  commentsShowCount.textContent = COMMENTS_SHOW_COUNT;
+  commentsShowCount.textContent = commentsShowCountValue;
 
   hideSocial();
   renderComments(thumbnail.comments);
