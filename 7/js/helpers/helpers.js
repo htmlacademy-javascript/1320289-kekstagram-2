@@ -1,3 +1,5 @@
+import { ESC_KEYCODE } from './consts';
+
 const getRandomInteger = (min, max) => {
   const lower = Math.ceil(Math.min(min, max));
   const upper = Math.floor(Math.max(min, max));
@@ -45,6 +47,8 @@ const createFragment = () => document.createDocumentFragment();
 const getElementFromTemplate = (selector) =>
   document.querySelector(`#${selector}`).content.querySelector(`.${selector}`);
 
+const isEscKeyCode = (evt) => evt.keyCode === ESC_KEYCODE;
+
 export {
   getRandomInteger,
   getNumberInRange,
@@ -53,4 +57,5 @@ export {
   getRandomArrayElement,
   createFragment,
   getElementFromTemplate,
+  isEscKeyCode,
 };

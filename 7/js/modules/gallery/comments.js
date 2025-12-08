@@ -1,12 +1,15 @@
-import { createFragment, getElementFromTemplate } from '../../helpers/helpers';
+import { createFragment } from '../../helpers/helpers';
+
+const commentsContainer = document.querySelector('.social__comments');
 
 const clearComments = (container) => {
   container.replaceChildren();
 };
 
 const createComment = (element) => {
-  const commentTemplate = getElementFromTemplate('social__comment');
-  const comment = commentTemplate.cloneNode(true);
+  const commentElement = document.querySelector('.social__comment');
+  const comment = commentElement.cloneNode(true);
+
   const img = comment.querySelector('.social__picture');
   const text = comment.querySelector('.social__text');
 
@@ -19,16 +22,13 @@ const createComment = (element) => {
 
 // Нужно доработать для показа порциями
 const renderComments = (comments) => {
-  const commentsContainer = document.querySelector('.social__comments');
-
-  clearComments(commentsContainer);
-
   const fragment = createFragment();
 
   comments.forEach((comment) => {
     fragment.append(createComment(comment));
   });
 
+  clearComments(commentsContainer);
   commentsContainer.append(fragment);
 };
 
