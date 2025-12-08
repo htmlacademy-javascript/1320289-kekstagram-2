@@ -4,13 +4,13 @@ const galleryModal = document.querySelector('.big-picture');
 const galleryModalClose = document.querySelector('#picture-cancel');
 const body = document.body;
 
-const clickOutsideHandler = (evt) => {
+const onClickOutside = (evt) => {
   if (evt.target === evt.currentTarget) {
     closeGalleryModal();
   }
 };
 
-const escKeydownHandler = (evt) => {
+const onEscKeydown = (evt) => {
   if (isEscKeyCode(evt)) {
     evt.preventDefault();
     closeGalleryModal();
@@ -18,8 +18,8 @@ const escKeydownHandler = (evt) => {
 };
 
 function closeGalleryModal() {
-  document.removeEventListener('keydown', escKeydownHandler);
-  galleryModal.removeEventListener('click', clickOutsideHandler);
+  document.removeEventListener('keydown', onEscKeydown);
+  galleryModal.removeEventListener('click', onClickOutside);
   galleryModalClose.removeEventListener('click', closeGalleryModal);
 
   galleryModal.classList.add('hidden');
@@ -27,8 +27,8 @@ function closeGalleryModal() {
 }
 
 const openGalleryModal = () => {
-  document.addEventListener('keydown', escKeydownHandler);
-  galleryModal.addEventListener('click', clickOutsideHandler);
+  document.addEventListener('keydown', onEscKeydown);
+  galleryModal.addEventListener('click', onClickOutside);
   galleryModalClose.addEventListener('click', closeGalleryModal);
 
   galleryModal.classList.remove('hidden');
