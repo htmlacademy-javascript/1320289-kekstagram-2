@@ -1,8 +1,10 @@
 import { isEscKeyCode } from '../../helpers/helpers';
+import { onLoadMoreClick } from './full-image';
 
 const galleryModal = document.querySelector('.big-picture');
 const galleryModalClose = document.querySelector('#picture-cancel');
 const body = document.body;
+const loadMore = document.querySelector('.comments-loader');
 
 const onClickOutside = (evt) => {
   if (evt.target === evt.currentTarget) {
@@ -21,6 +23,7 @@ function closeGalleryModal() {
   document.removeEventListener('keydown', onEscKeydown);
   galleryModal.removeEventListener('click', onClickOutside);
   galleryModalClose.removeEventListener('click', closeGalleryModal);
+  loadMore.removeEventListener('click', onLoadMoreClick);
 
   galleryModal.classList.add('hidden');
   body.classList.remove('modal-open');

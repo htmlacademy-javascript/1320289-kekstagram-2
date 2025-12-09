@@ -27,6 +27,8 @@ const COMMENT_AVATARS_RANGE = {
 
 const ESC_KEYCODE = 27;
 
+const COMMENTS_RENDER_COUNT = 5;
+
 const COMMENTS = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
@@ -45,4 +47,5 @@ export {
   COMMENT_AVATARS_RANGE,
   ESC_KEYCODE,
   COMMENTS,
+  COMMENTS_RENDER_COUNT,
 };
