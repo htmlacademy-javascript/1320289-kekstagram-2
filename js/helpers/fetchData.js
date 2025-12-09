@@ -17,4 +17,6 @@ const fetchDataFromPlaceholder = async (count) => {
   }
 };
 
-export const getData = async (count) => await fetchDataFromPlaceholder(count);
+const getData = async (count) => await fetchDataFromPlaceholder(count);
+
+export { getData };

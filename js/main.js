@@ -1,7 +1,3 @@
-import { PICTURES_COUNT } from './helpers/consts';
-import { createPicturesData } from './modules/data';
-import { renderPictures } from './modules/renderPictures';
+import { initGallery } from './modules/gallery/gallery';
 
-const picturesData = createPicturesData(PICTURES_COUNT);
-
-renderPictures(picturesData);
+initGallery();

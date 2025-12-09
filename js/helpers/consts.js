@@ -1,31 +1,33 @@
-export const PICTURES_COUNT = 25;
+const PICTURES_COUNT = 25;
 
-export const PICTURE_IDS_RANGE = {
+const PICTURE_IDS_RANGE = {
   MIN: 1,
   MAX: 25,
 };
 
-export const URLS_RANGE = {
+const URLS_RANGE = {
   MIN: 1,
   MAX: 25,
 };
 
-export const LIKES_RANGE = {
+const LIKES_RANGE = {
   MIN: 15,
   MAX: 200,
 };
 
-export const COMMENTS_COUNT_RANGE = {
+const COMMENTS_COUNT_RANGE = {
   MIN: 0,
   MAX: 30,
 };
 
-export const COMMENT_AVATARS_RANGE = {
+const COMMENT_AVATARS_RANGE = {
   MIN: 1,
   MAX: 6,
 };
 
-export const COMMENTS = [
+const ESC_KEYCODE = 27;
+
+const COMMENTS = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
@@ -33,3 +35,14 @@ export const COMMENTS = [
   'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
 ];
+
+export {
+  PICTURES_COUNT,
+  PICTURE_IDS_RANGE,
+  URLS_RANGE,
+  LIKES_RANGE,
+  COMMENTS_COUNT_RANGE,
+  COMMENT_AVATARS_RANGE,
+  ESC_KEYCODE,
+  COMMENTS,
+};

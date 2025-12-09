@@ -1,11 +1,13 @@
-export const getRandomInteger = (min, max) => {
+import { ESC_KEYCODE } from './consts';
+
+const getRandomInteger = (min, max) => {
   const lower = Math.ceil(Math.min(min, max));
   const upper = Math.floor(Math.max(min, max));
   const result = Math.random() * (upper - lower + 1) + lower;
   return Math.floor(result);
 };
 
-export const getNumberInRange = (min, max) => {
+const getNumberInRange = (min, max) => {
   const prevValues = [];
 
   return () => {
@@ -25,7 +27,7 @@ export const getNumberInRange = (min, max) => {
   };
 };
 
-export const getSequentialNumbers = () => {
+const getSequentialNumbers = () => {
   let currentValue = 0;
 
   return () => {
@@ -34,8 +36,26 @@ export const getSequentialNumbers = () => {
   };
 };
 
-export const getRandomNumberInRange = (min, max) =>
+const getRandomNumberInRange = (min, max) =>
   Math.floor(Math.random() * (max - min) + min);
 
-export const getRandomArrayElement = (elements) =>
+const getRandomArrayElement = (elements) =>
   elements[Math.floor(Math.random() * elements.length)];
+
+const createFragment = () => document.createDocumentFragment();
+
+const getElementFromTemplate = (selector) =>
+  document.querySelector(`#${selector}`).content.querySelector(`.${selector}`);
+
+const isEscKeyCode = (evt) => evt.keyCode === ESC_KEYCODE;
+
+export {
+  getRandomInteger,
+  getNumberInRange,
+  getSequentialNumbers,
+  getRandomNumberInRange,
+  getRandomArrayElement,
+  createFragment,
+  getElementFromTemplate,
+  isEscKeyCode,
+};
