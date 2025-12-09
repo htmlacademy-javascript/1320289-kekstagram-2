@@ -33,6 +33,7 @@ const openGalleryModal = () => {
   document.addEventListener('keydown', onEscKeydown);
   galleryModal.addEventListener('click', onClickOutside);
   galleryModalClose.addEventListener('click', closeGalleryModal);
+  loadMore.addEventListener('click', onLoadMoreClick);
 
   galleryModal.classList.remove('hidden');
   body.classList.add('modal-open');
