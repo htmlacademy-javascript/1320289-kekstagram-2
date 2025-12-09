@@ -2,6 +2,7 @@ import { COMMENTS_RENDER_COUNT } from '../../helpers/consts';
 import { createFragment } from '../../helpers/helpers';
 
 const commentsContainer = document.querySelector('.social__comments');
+const loadMore = document.querySelector('.comments-loader');
 
 const commentTemplate = document
   .querySelector('.social__comment')
@@ -40,7 +41,12 @@ const renderCommentsChunk = () => {
 
   commentsContainer.append(fragment);
   renderedCount = end;
+
   return renderedCount;
+};
+
+const updateLoadMoreVisibility = () => {
+  loadMore.classList.toggle('hidden', renderedCount === currentComments.length);
 };
 
 const initComments = (comments) => {
@@ -48,8 +54,14 @@ const initComments = (comments) => {
   renderedCount = 0;
   clearComments();
   renderCommentsChunk();
+  updateLoadMoreVisibility();
 };
 
 const getRenderedCount = () => renderedCount;
 
-export { renderCommentsChunk, initComments, getRenderedCount };
+export {
+  renderCommentsChunk,
+  initComments,
+  getRenderedCount,
+  updateLoadMoreVisibility,
+};

@@ -1,6 +1,7 @@
 import {
   getRenderedCount,
   initComments,
+  updateLoadMoreVisibility,
   renderCommentsChunk,
 } from './comments';
 
@@ -16,6 +17,7 @@ const updateCommentsCounter = () => {
 const onLoadMoreClick = () => {
   renderCommentsChunk();
   updateCommentsCounter();
+  updateLoadMoreVisibility();
 };
 
 const renderFullImage = (thumbnail) => {
@@ -25,7 +27,6 @@ const renderFullImage = (thumbnail) => {
   const commentsCount = galleryModal.querySelector(
     '.social__comment-total-count',
   );
-  const loadMore = document.querySelector('.comments-loader');
 
   img.src = thumbnail.url;
   img.alt = thumbnail.description;
@@ -35,8 +36,6 @@ const renderFullImage = (thumbnail) => {
 
   initComments(thumbnail.comments);
   updateCommentsCounter();
-
-  loadMore.addEventListener('click', onLoadMoreClick);
 };
 
 export { renderFullImage, onLoadMoreClick };
