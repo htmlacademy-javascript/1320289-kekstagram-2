@@ -1,7 +1,11 @@
 import { COMMENTS_RENDER_COUNT } from '../../helpers/consts';
-import { createElement, createFragment } from '../../helpers/helpers';
+import { createFragment } from '../../helpers/helpers';
 
 const commentsContainer = document.querySelector('.social__comments');
+
+const commentTemplate = document
+  .querySelector('.social__comment')
+  .cloneNode(true);
 
 let currentComments = [];
 let renderedCount = 0;
@@ -9,22 +13,6 @@ let renderedCount = 0;
 const clearComments = () => {
   commentsContainer.replaceChildren();
 };
-
-const createCommentTemplate = () => {
-  const imgSize = 35;
-
-  const element = createElement('li', 'social__comment');
-  const img = createElement('img', 'social__picture');
-  img.width = imgSize;
-  img.height = imgSize;
-
-  const text = createElement('p', 'social__text');
-  element.append(img, text);
-
-  return element;
-};
-
-const commentTemplate = createCommentTemplate();
 
 const createComment = (element) => {
   const comment = commentTemplate.cloneNode(true);

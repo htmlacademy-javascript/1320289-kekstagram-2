@@ -49,12 +49,6 @@ const getElementFromTemplate = (selector) =>
 
 const isEscKeyCode = (evt) => evt.keyCode === ESC_KEYCODE;
 
-const createElement = (tag, className) => {
-  const element = document.createElement(tag);
-  element.classList.add(className);
-  return element;
-};
-
 export {
   getRandomInteger,
   getNumberInRange,
@@ -64,5 +58,4 @@ export {
   createFragment,
   getElementFromTemplate,
   isEscKeyCode,
-  createElement,
 };
