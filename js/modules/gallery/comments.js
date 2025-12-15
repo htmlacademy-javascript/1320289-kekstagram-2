@@ -18,11 +18,10 @@ const clearComments = () => {
 const createComment = (element) => {
   const comment = commentTemplate.cloneNode(true);
   const img = comment.querySelector('.social__picture');
-  const text = comment.querySelector('.social__text');
+  comment.querySelector('.social__text').textContent = element.message;
 
   img.src = element.avatar;
   img.alt = element.name;
-  text.textContent = element.message;
 
   return comment;
 };
@@ -42,11 +41,9 @@ const renderCommentsChunk = () => {
   commentsContainer.append(fragment);
   renderedCount = end;
 
-  return renderedCount;
-};
-
-const updateLoadMoreVisibility = () => {
   loadMore.classList.toggle('hidden', renderedCount === currentComments.length);
+
+  return renderedCount;
 };
 
 const initComments = (comments) => {
@@ -54,14 +51,8 @@ const initComments = (comments) => {
   renderedCount = 0;
   clearComments();
   renderCommentsChunk();
-  updateLoadMoreVisibility();
 };
 
 const getRenderedCount = () => renderedCount;
 
-export {
-  renderCommentsChunk,
-  initComments,
-  getRenderedCount,
-  updateLoadMoreVisibility,
-};
+export { renderCommentsChunk, initComments, getRenderedCount };
