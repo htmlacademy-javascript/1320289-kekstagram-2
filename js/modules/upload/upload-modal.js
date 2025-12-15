@@ -1,5 +1,5 @@
 import { createModal } from '../modal-manager';
-import { onFieldInput, onFormSubmit } from './from-validation';
+import { onFieldInput, onFormSubmit } from './form-validation';
 
 const uploadNode = document.querySelector('.img-upload__input');
 const modalNode = document.querySelector('.img-upload__overlay');

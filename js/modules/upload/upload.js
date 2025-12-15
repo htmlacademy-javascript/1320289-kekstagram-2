@@ -1,5 +1,4 @@
 import { openModal } from './upload-modal';
-import './from-validation';
 
 const img = document.querySelector('.img-upload__preview img');
 const effectsPreviews = document.querySelectorAll('.effects__preview');

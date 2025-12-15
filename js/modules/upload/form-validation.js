@@ -64,7 +64,7 @@ const validateOffset = (value) => {
 pristine.addValidator(
   hashtags,
   validateFormat,
-  'Неверный формат хэштега. Хештег должен начинаться с # и состоять только из букв и чисел',
+  'Хештег должен начинаться с # и состоять только из букв и чисел',
 );
 
 pristine.addValidator(
@@ -73,9 +73,19 @@ pristine.addValidator(
   'Хештег не может быть длинее 20 символов включая #',
 );
 
-pristine.addValidator(hashtags, validateCount, 'Максимум 5 хэштегов', 3, false);
+pristine.addValidator(
+  hashtags,
+  validateCount,
+  'Максимум может быть 5 хэштегов',
+  3,
+  false,
+);
 
-pristine.addValidator(hashtags, validateUnique, 'Хэштеги повторяются');
+pristine.addValidator(
+  hashtags,
+  validateUnique,
+  'Хэштеги не должны повторяться',
+);
 
 pristine.addValidator(
   hashtags,
