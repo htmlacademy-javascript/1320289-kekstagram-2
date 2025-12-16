@@ -1,7 +1,6 @@
 import {
   getRenderedCount,
   initComments,
-  updateLoadMoreVisibility,
   renderCommentsChunk,
 } from './comments';
 
@@ -17,22 +16,19 @@ const updateCommentsCounter = () => {
 const onLoadMoreClick = () => {
   renderCommentsChunk();
   updateCommentsCounter();
-  updateLoadMoreVisibility();
 };
 
 const renderFullImage = (thumbnail) => {
   const img = galleryModal.querySelector('.big-picture__img img');
-  const description = galleryModal.querySelector('.social__caption');
-  const likes = galleryModal.querySelector('.likes-count');
-  const commentsCount = galleryModal.querySelector(
-    '.social__comment-total-count',
-  );
+
+  galleryModal.querySelector('.social__caption').textContent =
+    thumbnail.description;
+  galleryModal.querySelector('.likes-count').textContent = thumbnail.likes;
+  galleryModal.querySelector('.social__comment-total-count').textContent =
+    thumbnail.comments.length;
 
   img.src = thumbnail.url;
   img.alt = thumbnail.description;
-  description.textContent = thumbnail.description;
-  likes.textContent = thumbnail.likes;
-  commentsCount.textContent = thumbnail.comments.length;
 
   initComments(thumbnail.comments);
   updateCommentsCounter();
