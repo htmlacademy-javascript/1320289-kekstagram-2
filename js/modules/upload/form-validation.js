@@ -1,11 +1,12 @@
+import { HASHTAGS } from '../../helpers/consts';
 import { closeModal } from './upload-modal';
 
-const form = document.querySelector('.img-upload__form');
-const hashtags = document.querySelector('.text__hashtags');
-const submit = document.querySelector('.img-upload__submit');
+const formNode = document.querySelector('.img-upload__form');
+const hashtagsNode = document.querySelector('.text__hashtags');
+const submitNode = document.querySelector('.img-upload__submit');
 
 const pristine = new Pristine(
-  form,
+  formNode,
   {
     classTo: 'img-upload__field-wrapper',
     errorTextParent: 'img-upload__field-wrapper',
@@ -15,87 +16,48 @@ const pristine = new Pristine(
   false,
 );
 
-const validateFormat = (value) => {
-  if (!value) {
-    return true;
-  }
+const parseHashtags = (value) => (value ? value.trim().split(/\s+/) : []);
 
-  return value
-    .trim()
-    .split(/\s+/)
-    .every((tag) => /^#[a-zа-яё0-9]+$/i.test(tag));
-};
+const validations = [
+  {
+    validation: (value) => {
+      const tags = parseHashtags(value);
+      return !tags.length || tags.every((tag) => /^#[a-zа-яё0-9]+$/i.test(tag));
+    },
+    error: 'Хештег должен начинаться с # и состоять только из букв и чисел',
+  },
+  {
+    validation: (value) => {
+      const tags = parseHashtags(value);
+      return !tags.length || tags.every((tag) => tag.length <= HASHTAGS.LENGTH);
+    },
+    error: `Хештег не может быть длинее ${HASHTAGS.LENGTH} символов включая #`,
+  },
+  {
+    validation: (value) => parseHashtags(value).length <= HASHTAGS.COUNT,
+    error: `Максимум может быть ${HASHTAGS.COUNT} хэштегов`,
+  },
+  {
+    validation: (value) => {
+      const tags = parseHashtags(value).map((tag) => tag.toLowerCase());
+      return tags.length === new Set(tags).size;
+    },
+    error: 'Хэштеги не должны повторяться',
+  },
+  {
+    validation: (value) =>
+      !value || (!/##/.test(value) && !/[^#\s]#/.test(value)),
+    error: 'Хештеги должны разделяться пробелами',
+  },
+];
 
-const validateTagLength = (value) => {
-  if (!value) {
-    return true;
-  }
-
-  return value
-    .trim()
-    .split(/\s+/)
-    .every((tag) => tag.length <= 20);
-};
-
-const validateCount = (value) => {
-  if (!value) {
-    return true;
-  }
-
-  return value.trim().split(/\s+/).length <= 5;
-};
-
-const validateUnique = (value) => {
-  if (!value) {
-    return true;
-  }
-
-  const tags = value.trim().toLowerCase().split(/\s+/);
-  return tags.length === new Set(tags).size;
-};
-
-const validateOffset = (value) => {
-  if (!value) {
-    return true;
-  }
-  return !/##/.test(value) && !/[^#\s]#/.test(value);
-};
-
-pristine.addValidator(
-  hashtags,
-  validateFormat,
-  'Хештег должен начинаться с # и состоять только из букв и чисел',
-);
-
-pristine.addValidator(
-  hashtags,
-  validateTagLength,
-  'Хештег не может быть длинее 20 символов включая #',
-);
-
-pristine.addValidator(
-  hashtags,
-  validateCount,
-  'Максимум может быть 5 хэштегов',
-  3,
-  false,
-);
-
-pristine.addValidator(
-  hashtags,
-  validateUnique,
-  'Хэштеги не должны повторяться',
-);
-
-pristine.addValidator(
-  hashtags,
-  validateOffset,
-  'Хештеги должны разделяться пробелами',
-);
+validations.forEach(({ validation, error }, index) => {
+  pristine.addValidator(hashtagsNode, validation, error, index, false);
+});
 
 const onFieldInput = () => {
   const isValid = pristine.validate();
-  submit.disabled = !isValid;
+  submitNode.disabled = !isValid;
 };
 
 const onFormSubmit = (evt) => {
@@ -103,7 +65,7 @@ const onFormSubmit = (evt) => {
   const isValid = pristine.validate();
 
   if (isValid) {
-    form.submit();
+    formNode.submit();
     pristine.destroy();
     closeModal();
   }

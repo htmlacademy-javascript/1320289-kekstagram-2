@@ -1,17 +1,17 @@
 import { openModal } from './upload-modal';
 
-const img = document.querySelector('.img-upload__preview img');
-const effectsPreviews = document.querySelectorAll('.effects__preview');
-const trigger = document.querySelector('.img-upload__input');
+const imgNode = document.querySelector('.img-upload__preview img');
+const effectsNode = document.querySelectorAll('.effects__preview');
+const triggerNode = document.querySelector('.img-upload__input');
 
 const onInputChange = (evt) => {
   const file = evt.target.files[0];
 
   if (file) {
     const url = URL.createObjectURL(file);
-    img.src = url;
+    imgNode.src = url;
 
-    effectsPreviews.forEach((effectPreview) => {
+    effectsNode.forEach((effectPreview) => {
       effectPreview.style.backgroundImage = `url(${url})`;
     });
   }
@@ -20,7 +20,7 @@ const onInputChange = (evt) => {
 };
 
 const initUpload = () => {
-  trigger.addEventListener('change', onInputChange);
+  triggerNode.addEventListener('change', onInputChange);
 };
 
 export { initUpload };

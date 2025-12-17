@@ -1,5 +1,7 @@
 import { isEscKeyCode } from '../helpers/helpers';
 
+let handlerIdCounter = 0;
+
 function createModal(modalNode, closeNode) {
   const body = document.body;
   const handlers = new Map();
@@ -60,9 +62,13 @@ function createModal(modalNode, closeNode) {
   }
 
   const addHandler = (element, event, handler) => {
-    const key = `${event}-${element}`;
+    if (!element._handlerId) {
+      element._handlerId = ++handlerIdCounter;
+    }
+
+    const key = `${event}-${element._handlerId}`;
+
     if (!handlers.has(key)) {
-      element.addEventListener(event, handler);
       handlers.set(key, { element, event, handler });
     }
   };

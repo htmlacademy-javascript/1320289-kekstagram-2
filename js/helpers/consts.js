@@ -38,6 +38,68 @@ const COMMENTS = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
 ];
 
+const HASHTAGS = {
+  LENGTH: 20,
+  COUNT: 5,
+};
+
+const SCALE = {
+  MIN: 25,
+  MAX: 100,
+  STEP: 25,
+};
+
+const EFFECTS = [
+  {
+    name: 'chrome',
+    filter: 'grayscale',
+    min: 0,
+    max: 1,
+    step: 0.1,
+    units: '',
+  },
+  {
+    name: 'sepia',
+    filter: 'sepia',
+    min: 0,
+    max: 1,
+    step: 0.1,
+    units: '',
+  },
+  {
+    name: 'marvin',
+    filter: 'invert',
+    min: 0,
+    max: 100,
+    step: 1,
+    units: '%',
+  },
+  {
+    name: 'phobos',
+    filter: 'blur',
+    min: 0,
+    max: 3,
+    step: 0.1,
+    units: 'px',
+  },
+  {
+    name: 'heat',
+    filter: 'brightness',
+    min: 1,
+    max: 3,
+    step: 0.1,
+    units: '',
+  },
+  {
+    name: 'none',
+    filter: 'none',
+    min: 1,
+    max: 10,
+    step: 1,
+    units: '',
+  },
+];
+
 export {
   PICTURES_COUNT,
   PICTURE_IDS_RANGE,
@@ -48,4 +110,7 @@ export {
   ESC_KEYCODE,
   COMMENTS,
   COMMENTS_RENDER_COUNT,
+  HASHTAGS,
+  SCALE,
+  EFFECTS,
 };
