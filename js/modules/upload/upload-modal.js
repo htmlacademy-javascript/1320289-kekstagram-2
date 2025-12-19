@@ -1,8 +1,13 @@
 import { createModal } from '../modal-manager';
-import { onEffectChange } from './effects';
+import { applyEffect, getCurrentEffect, onEffectChange } from './effects';
 import { onFieldInput, onFormSubmit } from './form-validation';
 import { decreaseScale, increaseScale, updateButtons } from './scale';
-import { createSlider, destroySlider } from './slider';
+import {
+  createSlider,
+  destroySlider,
+  updateSlider,
+  updateSliderVisibility,
+} from './slider';
 
 const uploadNode = document.querySelector('.img-upload__input');
 const modalNode = document.querySelector('.img-upload__overlay');
@@ -22,14 +27,16 @@ modal.setOnClose(() => {
 
 modal.setOnOpen(() => {
   updateButtons();
-  createSlider();
+  createSlider(applyEffect, getCurrentEffect);
 });
 
 modal.addHandler(tagNode, 'input', onFieldInput);
 modal.addHandler(formNode, 'submit', onFormSubmit);
 modal.addHandler(scaleDecreaseNode, 'click', decreaseScale);
 modal.addHandler(scaleIncreaseNode, 'click', increaseScale);
-modal.addHandler(effectsNode, 'change', onEffectChange);
+modal.addHandler(effectsNode, 'change', (evt) => {
+  onEffectChange(evt, updateSlider, updateSliderVisibility);
+});
 
 const openModal = modal.open;
 const closeModal = modal.close;

@@ -1,6 +1,4 @@
 import { EFFECTS } from '../../helpers/consts';
-import { updateSliderVisibility } from './slider';
-import { updateSlider } from './slider';
 
 const imgNode = document.querySelector('.img-upload__preview img');
 
@@ -20,7 +18,7 @@ const applyEffect = (value = null) => {
   imgNode.style.filter = buildFilterValue(currentEffect, intensity);
 };
 
-const onEffectChange = (evt) => {
+const onEffectChange = (evt, updateSlider, updateSliderVisibility) => {
   if (!evt.target.matches('input[name="effect"]')) {
     return;
   }
