@@ -1,5 +1,3 @@
-import { applyEffect, getCurrentEffect } from './effects';
-
 const containerNode = document.querySelector('.img-upload__effect-level');
 const inputNode = document.querySelector('.effect-level__value');
 const sliderNode = document.querySelector('.effect-level__slider');
@@ -14,13 +12,13 @@ const updateSliderVisibility = (effect) => {
   }
 };
 
-const onSliderUpdate = () => {
+const onSliderUpdate = (applyEffect, getCurrentEffect) => {
   applyEffect(sliderNode.noUiSlider.get());
   inputNode.step = getCurrentEffect().name;
   inputNode.value = sliderNode.noUiSlider.get();
 };
 
-const createSlider = () => {
+const createSlider = (applyEffect, getCurrentEffect) => {
   noUiSlider.create(sliderNode, {
     range: {
       min: 0,
@@ -43,7 +41,7 @@ const createSlider = () => {
   updateSliderVisibility(getCurrentEffect());
 
   sliderNode.noUiSlider.on('update', () => {
-    onSliderUpdate();
+    onSliderUpdate(applyEffect, getCurrentEffect);
   });
 };
 
@@ -62,4 +60,10 @@ const updateSlider = (effect) => {
   });
 };
 
-export { createSlider, destroySlider, updateSlider, updateSliderVisibility };
+export {
+  createSlider,
+  destroySlider,
+  updateSlider,
+  updateSliderVisibility,
+  onSliderUpdate,
+};
