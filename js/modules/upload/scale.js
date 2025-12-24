@@ -37,4 +37,4 @@ const decreaseScale = () => {
   }
 };
 
-export { increaseScale, decreaseScale, updateButtons };
+export { increaseScale, decreaseScale, updateButtons, applyScale };

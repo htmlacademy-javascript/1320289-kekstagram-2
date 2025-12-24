@@ -1,7 +1,22 @@
 import { createModal } from '../modal-manager';
-import { applyEffect, getCurrentEffect, onEffectChange } from './effects';
-import { onFieldInput, onFormSubmit } from './form-validation';
-import { decreaseScale, increaseScale, updateButtons } from './scale';
+import {
+  applyEffect,
+  getCurrentEffect,
+  onEffectChange,
+  resetCurrentEffect,
+} from './effects';
+import {
+  createPristine,
+  destroyPristine,
+  onFieldInput,
+  onFormSubmit,
+} from './form-validation';
+import {
+  applyScale,
+  decreaseScale,
+  increaseScale,
+  updateButtons,
+} from './scale';
 import {
   createSlider,
   destroySlider,
@@ -9,29 +24,32 @@ import {
   updateSliderVisibility,
 } from './slider';
 
-const uploadNode = document.querySelector('.img-upload__input');
 const modalNode = document.querySelector('.img-upload__overlay');
 const closeNode = document.querySelector('#upload-cancel');
-const tagNode = document.querySelector('.text__hashtags');
 const formNode = document.querySelector('.img-upload__form');
 const scaleDecreaseNode = document.querySelector('.scale__control--smaller');
 const scaleIncreaseNode = document.querySelector('.scale__control--bigger');
 const effectsNode = document.querySelector('.effects__list');
+const fieldsNode = document.querySelector('.img-upload__text');
 
 const modal = createModal(modalNode, closeNode);
 
 modal.setOnClose(() => {
-  uploadNode.value = '';
+  formNode.reset();
   destroySlider();
+  destroyPristine();
 });
 
 modal.setOnOpen(() => {
   updateButtons();
+  resetCurrentEffect();
+  applyScale();
   createSlider(applyEffect, getCurrentEffect);
+  createPristine();
 });
 
-modal.addHandler(tagNode, 'input', onFieldInput);
-modal.addHandler(formNode, 'submit', onFormSubmit);
+modal.addHandler(fieldsNode, 'input', onFieldInput);
+modal.addHandler(formNode, 'submit', (evt) => onFormSubmit(evt, modal.close));
 modal.addHandler(scaleDecreaseNode, 'click', decreaseScale);
 modal.addHandler(scaleIncreaseNode, 'click', increaseScale);
 modal.addHandler(effectsNode, 'change', (evt) => {
