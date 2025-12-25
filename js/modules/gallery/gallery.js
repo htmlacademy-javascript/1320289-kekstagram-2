@@ -1,27 +1,29 @@
-import { PICTURES_COUNT } from '../../helpers/consts';
-import { createPicturesData } from '../data';
+import { getData } from '../api';
+import { showToastr } from '../toastr';
+import { initComments, getRenderedCount } from './comments';
 import { renderFullImage } from './full-image';
 import { openGalleryModal } from './gallery-modal';
 import { renderThumbnails, onThumbnailClick } from './thumbnails';
 
-const picturesData = createPicturesData(PICTURES_COUNT);
-
-const thumbnailClickHandler = (element) => {
-  const thumbnailId = Number(element.dataset.id);
-  const thumbnailData = picturesData.find(
-    (picture) => picture.id === thumbnailId,
-  );
-
-  if (thumbnailData) {
-    renderFullImage(thumbnailData);
-    openGalleryModal();
-  }
-};
-
 const initGallery = () => {
-  onThumbnailClick(thumbnailClickHandler);
+  getData()
+    .then((data) => {
+      const thumbnailClickHandler = (element) => {
+        const thumbnailId = Number(element.dataset.id);
+        const thumbnailData = data.find(
+          (picture) => picture.id === thumbnailId,
+        );
 
-  renderThumbnails(picturesData);
+        if (thumbnailData) {
+          renderFullImage(thumbnailData, initComments, getRenderedCount);
+          openGalleryModal();
+        }
+      };
+
+      onThumbnailClick(thumbnailClickHandler);
+      renderThumbnails(data);
+    })
+    .catch(() => showToastr('data-error', true));
 };
 
 export { initGallery };

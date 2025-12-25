@@ -1,24 +1,18 @@
-import {
-  getRenderedCount,
-  initComments,
-  renderCommentsChunk,
-} from './comments';
-
 const galleryModal = document.querySelector('.big-picture');
 
-const updateCommentsCounter = () => {
+const updateCommentsCounter = (getRenderedCount) => {
   const commentsShowCount = galleryModal.querySelector(
     '.social__comment-shown-count',
   );
   commentsShowCount.textContent = getRenderedCount();
 };
 
-const onLoadMoreClick = () => {
+const onLoadMoreClick = (renderCommentsChunk, getRenderedCount) => {
   renderCommentsChunk();
-  updateCommentsCounter();
+  updateCommentsCounter(getRenderedCount);
 };
 
-const renderFullImage = (thumbnail) => {
+const renderFullImage = (thumbnail, initComments, getRenderedCount) => {
   const img = galleryModal.querySelector('.big-picture__img img');
 
   galleryModal.querySelector('.social__caption').textContent =
@@ -31,7 +25,7 @@ const renderFullImage = (thumbnail) => {
   img.alt = thumbnail.description;
 
   initComments(thumbnail.comments);
-  updateCommentsCounter();
+  updateCommentsCounter(getRenderedCount);
 };
 
 export { renderFullImage, onLoadMoreClick };

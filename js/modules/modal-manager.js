@@ -1,4 +1,4 @@
-import { isEscKeyCode } from '../helpers/helpers';
+import { onClickOutside, onEscKeydown } from '../helpers/helpers';
 
 let handlerIdCounter = 0;
 
@@ -11,29 +11,17 @@ function createModal(modalNode, closeNode) {
     onClose: null,
   };
 
-  const onClickOutside = (evt) => {
-    if (evt.target === evt.currentTarget) {
-      close();
-    }
+  const onClickOutsideHandler = (evt) => {
+    onClickOutside(evt, close);
   };
 
-  const onEscKeydown = (evt) => {
-    if (
-      (document.activeElement && document.activeElement.tagName === 'INPUT') ||
-      (document.activeElement && document.activeElement.tagName === 'TEXTAREA')
-    ) {
-      return;
-    }
-
-    if (isEscKeyCode(evt)) {
-      evt.preventDefault();
-      close();
-    }
+  const onEscKeydownHandler = (evt) => {
+    onEscKeydown(evt, close);
   };
 
   function close() {
-    document.removeEventListener('keydown', onEscKeydown);
-    modalNode.removeEventListener('click', onClickOutside);
+    document.removeEventListener('keydown', onEscKeydownHandler);
+    modalNode.removeEventListener('click', onClickOutsideHandler);
     closeNode.removeEventListener('click', close);
 
     handlers.forEach(({ element, event, handler }) => {
@@ -47,8 +35,8 @@ function createModal(modalNode, closeNode) {
   }
 
   function open() {
-    document.addEventListener('keydown', onEscKeydown);
-    modalNode.addEventListener('click', onClickOutside);
+    document.addEventListener('keydown', onEscKeydownHandler);
+    modalNode.addEventListener('click', onClickOutsideHandler);
     closeNode.addEventListener('click', close);
 
     handlers.forEach(({ element, event, handler }) => {

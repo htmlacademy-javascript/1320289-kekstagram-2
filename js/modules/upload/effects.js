@@ -2,7 +2,7 @@ import { EFFECTS } from '../../helpers/consts';
 
 const imgNode = document.querySelector('.img-upload__preview img');
 
-let currentEffect = EFFECTS.find((effect) => effect.name === 'none');
+let currentEffect;
 
 const buildFilterValue = (effect, value) => {
   if (effect.name === 'none') {
@@ -33,4 +33,9 @@ const onEffectChange = (evt, updateSlider, updateSliderVisibility) => {
 
 const getCurrentEffect = () => currentEffect;
 
-export { applyEffect, onEffectChange, getCurrentEffect };
+const resetCurrentEffect = () => {
+  currentEffect = EFFECTS.find((effect) => effect.name === 'none');
+  applyEffect();
+};
+
+export { applyEffect, onEffectChange, getCurrentEffect, resetCurrentEffect };
