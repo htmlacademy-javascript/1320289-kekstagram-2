@@ -17,17 +17,24 @@ const onClickOutside = (evt, close) => {
 };
 
 const onEscKeydown = (evt, close) => {
-  if (
-    (document.activeElement && document.activeElement.tagName === 'INPUT') ||
-    (document.activeElement && document.activeElement.tagName === 'TEXTAREA')
-  ) {
+  if (['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName)) {
     return;
   }
 
   if (isEscKeyCode(evt)) {
     evt.preventDefault();
+    evt.stopImmediatePropagation();
     close();
   }
+};
+
+const debounce = (cb, timeout = 500) => {
+  let timeoutId;
+
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => cb.apply(this, rest), timeout);
+  };
 };
 
 export {
@@ -36,4 +43,5 @@ export {
   isEscKeyCode,
   onClickOutside,
   onEscKeydown,
+  debounce,
 };

@@ -1,3 +1,4 @@
+import { debounce } from '../../helpers/common';
 import { createModal } from '../modal-manager';
 import {
   applyEffect,
@@ -48,7 +49,7 @@ modal.setOnOpen(() => {
   createPristine();
 });
 
-modal.addHandler(fieldsNode, 'input', onFieldInput);
+modal.addHandler(fieldsNode, 'input', debounce(onFieldInput));
 modal.addHandler(formNode, 'submit', (evt) => onFormSubmit(evt, modal.close));
 modal.addHandler(scaleDecreaseNode, 'click', decreaseScale);
 modal.addHandler(scaleIncreaseNode, 'click', increaseScale);

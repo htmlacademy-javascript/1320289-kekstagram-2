@@ -1,5 +1,5 @@
 import { COMMENTS_RENDER_COUNT } from '../../helpers/consts';
-import { createFragment } from '../../helpers/helpers';
+import { createFragment } from '../../helpers/common';
 
 const commentsContainer = document.querySelector('.social__comments');
 const loadMore = document.querySelector('.comments-loader');

@@ -3,7 +3,7 @@ import {
   getElementFromTemplate,
   onClickOutside,
   onEscKeydown,
-} from '../helpers/helpers';
+} from '../helpers/common';
 
 function showToastr(id, timeout = false) {
   const toastr = getElementFromTemplate(id);
@@ -26,12 +26,12 @@ function showToastr(id, timeout = false) {
     onEscKeydown(evt, close);
   };
 
-  document.addEventListener('keydown', onEscKeydownHandler);
+  document.addEventListener('keydown', onEscKeydownHandler, true);
   toastr.addEventListener('click', onClickOutsideHandler);
   button.addEventListener('click', close);
 
   function close() {
-    document.removeEventListener('keydown', onEscKeydownHandler);
+    document.removeEventListener('keydown', onEscKeydownHandler, true);
     toastr.removeEventListener('click', onClickOutsideHandler);
     button.removeEventListener('click', close);
     toastr.remove();

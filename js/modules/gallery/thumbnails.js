@@ -1,4 +1,4 @@
-import { createFragment, getElementFromTemplate } from '../../helpers/helpers';
+import { createFragment, getElementFromTemplate } from '../../helpers/common';
 
 const thumbnailsContainer = document.querySelector('.pictures');
 
@@ -33,6 +33,12 @@ const renderThumbnails = (thumbnails) => {
   return thumbnailsArray;
 };
 
+const clearThumbnails = () => {
+  thumbnailsContainer
+    .querySelectorAll('.picture')
+    .forEach((picture) => picture.remove());
+};
+
 const onThumbnailClick = (clickHandler) => {
   thumbnailsContainer.addEventListener('click', (evt) => {
     const thumbnail = evt.target.closest('.picture');
@@ -44,4 +50,4 @@ const onThumbnailClick = (clickHandler) => {
   });
 };
 
-export { renderThumbnails, onThumbnailClick };
+export { renderThumbnails, onThumbnailClick, clearThumbnails };

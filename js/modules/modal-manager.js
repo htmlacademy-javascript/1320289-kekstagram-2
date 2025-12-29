@@ -1,4 +1,4 @@
-import { onClickOutside, onEscKeydown } from '../helpers/helpers';
+import { onClickOutside, onEscKeydown } from '../helpers/common';
 
 let handlerIdCounter = 0;
 
