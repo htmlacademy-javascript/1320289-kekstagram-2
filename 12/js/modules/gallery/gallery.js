@@ -14,7 +14,7 @@ import {
 const initGallery = () => {
   getData()
     .then((data) => {
-      const thumbnailClickHandler = (element) => {
+      const onThumbnailClickGallery = (element) => {
         const thumbnailId = Number(element.dataset.id);
         const thumbnailData = data.find(
           (picture) => picture.id === thumbnailId,
@@ -26,7 +26,7 @@ const initGallery = () => {
         }
       };
 
-      onThumbnailClick(thumbnailClickHandler);
+      onThumbnailClick(onThumbnailClickGallery);
       renderThumbnails(data);
 
       initFilters(
