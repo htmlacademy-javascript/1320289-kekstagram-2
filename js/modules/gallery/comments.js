@@ -1,29 +1,26 @@
 import { COMMENTS_RENDER_COUNT } from '../../helpers/consts';
-import { createFragment } from '../../helpers/helpers';
+import { createFragment } from '../../helpers/common';
 
-const commentsContainer = document.querySelector('.social__comments');
-const loadMore = document.querySelector('.comments-loader');
-
-const commentTemplate = document
+const commentsContainerNode = document.querySelector('.social__comments');
+const loadMoreNode = document.querySelector('.comments-loader');
+const commentTemplateNode = document
   .querySelector('.social__comment')
   .cloneNode(true);
 
 let currentComments = [];
 let renderedCount = 0;
 
-const clearComments = () => {
-  commentsContainer.replaceChildren();
-};
+const clearComments = () => commentsContainerNode.replaceChildren();
 
-const createComment = (element) => {
-  const comment = commentTemplate.cloneNode(true);
-  const img = comment.querySelector('.social__picture');
-  comment.querySelector('.social__text').textContent = element.message;
+const createComment = ({ avatar, name, message }) => {
+  const commentNode = commentTemplateNode.cloneNode(true);
+  const imgNode = commentNode.querySelector('.social__picture');
 
-  img.src = element.avatar;
-  img.alt = element.name;
+  commentNode.querySelector('.social__text').textContent = message;
+  imgNode.src = avatar;
+  imgNode.alt = name;
 
-  return comment;
+  return commentNode;
 };
 
 const renderCommentsChunk = () => {
@@ -38,10 +35,13 @@ const renderCommentsChunk = () => {
     fragment.append(createComment(currentComments[i]));
   }
 
-  commentsContainer.append(fragment);
+  commentsContainerNode.append(fragment);
   renderedCount = end;
 
-  loadMore.classList.toggle('hidden', renderedCount === currentComments.length);
+  loadMoreNode.classList.toggle(
+    'hidden',
+    renderedCount === currentComments.length,
+  );
 
   return renderedCount;
 };

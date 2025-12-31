@@ -1,47 +1,52 @@
-import { createFragment, getElementFromTemplate } from '../../helpers/helpers';
+import { createFragment, getElementFromTemplate } from '../../helpers/common';
 
-const thumbnailsContainer = document.querySelector('.pictures');
+const thumbnailsContainerNode = document.querySelector('.pictures');
+const thumbnailTemplateNode = getElementFromTemplate('picture');
 
 const createThumbnail = ({ id, comments, description, likes, url }) => {
-  const thumbnailTemplate = getElementFromTemplate('picture');
-  const thumbnail = thumbnailTemplate.cloneNode(true);
-  const img = thumbnail.querySelector('.picture__img');
-  const commetntsContainer = thumbnail.querySelector('.picture__comments');
-  const likesContainer = thumbnail.querySelector('.picture__likes');
+  const thumbnailNode = thumbnailTemplateNode.cloneNode(true);
+  const imgNode = thumbnailNode.querySelector('.picture__img');
 
-  thumbnail.dataset.id = id;
-  img.src = url;
-  img.alt = description;
-  likesContainer.textContent = likes;
-  commetntsContainer.textContent = comments.length;
+  thumbnailNode.dataset.id = id;
+  imgNode.src = url;
+  imgNode.alt = description;
+  thumbnailNode.querySelector('.picture__likes').textContent = likes;
+  thumbnailNode.querySelector('.picture__comments').textContent =
+    comments.length;
 
-  return thumbnail;
+  return thumbnailNode;
 };
 
 const renderThumbnails = (thumbnails) => {
   const fragment = createFragment();
   const thumbnailsArray = [];
 
-  thumbnails.forEach((thumbnail) => {
-    const thumbnailElement = createThumbnail(thumbnail);
+  thumbnails.forEach((element) => {
+    const thumbnailElement = createThumbnail(element);
 
     fragment.append(thumbnailElement);
     thumbnailsArray.push(thumbnailElement);
   });
 
-  thumbnailsContainer.append(fragment);
+  thumbnailsContainerNode.append(fragment);
   return thumbnailsArray;
 };
 
-const onThumbnailClick = (clickHandler) => {
-  thumbnailsContainer.addEventListener('click', (evt) => {
-    const thumbnail = evt.target.closest('.picture');
+const clearThumbnails = () => {
+  thumbnailsContainerNode
+    .querySelectorAll('.picture')
+    .forEach((picture) => picture.remove());
+};
 
-    if (thumbnail) {
+const onThumbnailClick = (clickHandler) => {
+  thumbnailsContainerNode.addEventListener('click', (evt) => {
+    const thumbnailNode = evt.target.closest('.picture');
+
+    if (thumbnailNode) {
       evt.preventDefault();
-      clickHandler(thumbnail);
+      clickHandler(thumbnailNode);
     }
   });
 };
 
-export { renderThumbnails, onThumbnailClick };
+export { renderThumbnails, onThumbnailClick, clearThumbnails };

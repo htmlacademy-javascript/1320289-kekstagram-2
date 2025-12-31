@@ -1,10 +1,10 @@
-const galleryModal = document.querySelector('.big-picture');
+const galleryModalNode = document.querySelector('.big-picture');
 
 const updateCommentsCounter = (getRenderedCount) => {
-  const commentsShowCount = galleryModal.querySelector(
+  const commentsShowCountNode = galleryModalNode.querySelector(
     '.social__comment-shown-count',
   );
-  commentsShowCount.textContent = getRenderedCount();
+  commentsShowCountNode.textContent = getRenderedCount();
 };
 
 const onLoadMoreClick = (renderCommentsChunk, getRenderedCount) => {
@@ -13,16 +13,16 @@ const onLoadMoreClick = (renderCommentsChunk, getRenderedCount) => {
 };
 
 const renderFullImage = (thumbnail, initComments, getRenderedCount) => {
-  const img = galleryModal.querySelector('.big-picture__img img');
+  const imgNode = galleryModalNode.querySelector('.big-picture__img img');
 
-  galleryModal.querySelector('.social__caption').textContent =
+  galleryModalNode.querySelector('.social__caption').textContent =
     thumbnail.description;
-  galleryModal.querySelector('.likes-count').textContent = thumbnail.likes;
-  galleryModal.querySelector('.social__comment-total-count').textContent =
+  galleryModalNode.querySelector('.likes-count').textContent = thumbnail.likes;
+  galleryModalNode.querySelector('.social__comment-total-count').textContent =
     thumbnail.comments.length;
 
-  img.src = thumbnail.url;
-  img.alt = thumbnail.description;
+  imgNode.src = thumbnail.url;
+  imgNode.alt = thumbnail.description;
 
   initComments(thumbnail.comments);
   updateCommentsCounter(getRenderedCount);

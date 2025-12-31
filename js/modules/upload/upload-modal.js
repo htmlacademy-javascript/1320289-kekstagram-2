@@ -1,4 +1,4 @@
-import { createModal } from '../modal-manager';
+import { createModal } from '../modal';
 import {
   applyEffect,
   getCurrentEffect,
