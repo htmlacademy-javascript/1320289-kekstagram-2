@@ -1,4 +1,4 @@
-import { onClickOutside, onEscKeydown } from '../helpers/common';
+import { registerEscHandler, unregisterEscHandler } from './overlay-manager';
 
 let handlerIdCounter = 0;
 
@@ -6,22 +6,20 @@ function createModal(modalNode, closeNode) {
   const body = document.body;
   const handlers = new Map();
 
+  const overlayConfig = {
+    overlay: modalNode,
+    content: modalNode.firstElementChild,
+    onEscKeydown: close,
+    onClickOutside: close,
+  };
+
   const callbacks = {
     onOpen: null,
     onClose: null,
   };
 
-  const onClickOutsideHandler = (evt) => {
-    onClickOutside(evt, close);
-  };
-
-  const onEscKeydownHandler = (evt) => {
-    onEscKeydown(evt, close);
-  };
-
   function close() {
-    document.removeEventListener('keydown', onEscKeydownHandler);
-    modalNode.removeEventListener('click', onClickOutsideHandler);
+    unregisterEscHandler(overlayConfig);
     closeNode.removeEventListener('click', close);
 
     handlers.forEach(({ element, event, handler }) => {
@@ -35,8 +33,7 @@ function createModal(modalNode, closeNode) {
   }
 
   function open() {
-    document.addEventListener('keydown', onEscKeydownHandler);
-    modalNode.addEventListener('click', onClickOutsideHandler);
+    registerEscHandler(overlayConfig);
     closeNode.addEventListener('click', close);
 
     handlers.forEach(({ element, event, handler }) => {

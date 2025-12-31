@@ -17,6 +17,7 @@ const onInputChange = (evt) => {
   }
 
   openModal();
+  triggerNode.blur();
 };
 
 const initUpload = () => {

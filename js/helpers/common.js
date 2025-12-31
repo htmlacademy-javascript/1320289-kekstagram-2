@@ -10,24 +10,6 @@ const getElementFromTemplate = (selector) =>
 
 const isEscKeyCode = (evt) => evt.keyCode === ESC_KEYCODE;
 
-const onClickOutside = (evt, close) => {
-  if (evt.target === evt.currentTarget) {
-    close();
-  }
-};
-
-const onEscKeydown = (evt, close) => {
-  if (['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName)) {
-    return;
-  }
-
-  if (isEscKeyCode(evt)) {
-    evt.preventDefault();
-    evt.stopImmediatePropagation();
-    close();
-  }
-};
-
 const debounce = (cb, timeout = 500) => {
   let timeoutId;
 
@@ -37,11 +19,4 @@ const debounce = (cb, timeout = 500) => {
   };
 };
 
-export {
-  createFragment,
-  getElementFromTemplate,
-  isEscKeyCode,
-  onClickOutside,
-  onEscKeydown,
-  debounce,
-};
+export { createFragment, getElementFromTemplate, isEscKeyCode, debounce };
