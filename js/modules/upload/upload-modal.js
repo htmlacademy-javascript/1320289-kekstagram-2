@@ -1,3 +1,4 @@
+import { resetForm } from '../../helpers/common';
 import { createModal } from '../modal';
 import {
   applyEffect,
@@ -35,7 +36,7 @@ const fieldsNode = document.querySelector('.img-upload__text');
 const modal = createModal(modalNode, closeNode);
 
 modal.setOnClose(() => {
-  formNode.reset();
+  resetForm(formNode);
   destroySlider();
   destroyPristine();
 });
@@ -59,4 +60,4 @@ modal.addHandler(effectsNode, 'change', (evt) => {
 const openModal = modal.open;
 const closeModal = modal.close;
 
-export { openModal, closeModal };
+export { openModal, closeModal, resetForm };

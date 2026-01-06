@@ -1,3 +1,5 @@
+import { RANDOM_IMAGES_COUNT } from '../../helpers/consts';
+
 const filtersNode = document.querySelector('.img-filters');
 const filterFormNode = document.querySelector('.img-filters__form');
 const hiddenClass = 'img-filters--inactive';
@@ -11,7 +13,7 @@ const FILTERS = {
     array
       .slice()
       .sort(() => Math.random() - 0.5)
-      .slice(0, 10),
+      .slice(0, RANDOM_IMAGES_COUNT),
   'filter-discussed': (array) =>
     array.slice().sort((a, b) => b.comments.length - a.comments.length),
 };
