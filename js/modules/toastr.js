@@ -2,7 +2,7 @@ import { TOASTR_SHOW_TIME } from '../helpers/consts';
 import { getElementFromTemplate } from '../helpers/common';
 import { registerEscHandler, unregisterEscHandler } from './overlay-manager';
 
-function showToastr(id, timeout = false) {
+function showToastr(id, timeout = false, errorMesssage = null) {
   const toastrNode = getElementFromTemplate(id);
 
   const overlayConfig = {
@@ -13,6 +13,10 @@ function showToastr(id, timeout = false) {
   };
 
   document.body.append(toastrNode);
+
+  if (errorMesssage) {
+    toastrNode.firstElementChild.textContent = errorMesssage;
+  }
 
   if (timeout) {
     setTimeout(() => {
