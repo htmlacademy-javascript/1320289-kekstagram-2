@@ -8,14 +8,14 @@ const activeFilterClass = 'img-filters__button--active';
 let currentFilterNode = document.querySelector('#filter-default');
 
 const FILTERS = {
-  'filter-default': (array) => array,
-  'filter-random': (array) =>
-    array
+  'filter-default': (photos) => photos,
+  'filter-random': (photos) =>
+    photos
       .slice()
       .sort(() => Math.random() - 0.5)
       .slice(0, RANDOM_IMAGES_COUNT),
-  'filter-discussed': (array) =>
-    array.slice().sort((a, b) => b.comments.length - a.comments.length),
+  'filter-discussed': (photos) =>
+    photos.slice().sort((a, b) => b.comments.length - a.comments.length),
 };
 
 const applyFilter = (filter, photos) => {

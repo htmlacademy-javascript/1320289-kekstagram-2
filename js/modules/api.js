@@ -10,7 +10,7 @@ const METHODS = {
   POST: 'POST',
 };
 
-const setupRequest = (method, errorMesssage, body = null) =>
+const sendRequest = (method, errorMesssage, body = null) =>
   fetch(`${URL}${ROUTE[method]}`, { method, body })
     .then((response) => {
       if (!response.ok) {
@@ -22,9 +22,9 @@ const setupRequest = (method, errorMesssage, body = null) =>
       throw new Error(errorMesssage, error);
     });
 
-const getData = () => setupRequest(METHODS.GET, 'Не удалось загрузить данные');
+const getData = () => sendRequest(METHODS.GET, 'Не удалось загрузить данные');
 
 const sendData = (body) =>
-  setupRequest(METHODS.POST, 'Ошибка загрузки файла', body);
+  sendRequest(METHODS.POST, 'Ошибка загрузки файла', body);
 
 export { getData, sendData };

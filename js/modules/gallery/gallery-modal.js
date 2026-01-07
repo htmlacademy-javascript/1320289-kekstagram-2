@@ -11,6 +11,6 @@ modal.addHandler(loadMoreNode, 'click', () =>
   onLoadMoreClick(renderCommentsChunk, getRenderedCount),
 );
 
-const openGalleryModal = modal.open;
+const openGalleryModal = modal.onModalOpen;
 
 export { openGalleryModal };

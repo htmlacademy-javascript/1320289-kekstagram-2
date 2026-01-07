@@ -1,15 +1,21 @@
 import { TOASTR_SHOW_TIME } from '../helpers/consts';
-import { getElementFromTemplate } from '../helpers/common';
-import { registerEscHandler, unregisterEscHandler } from './overlay-manager';
+import {
+  getElementFromTemplate,
+  onEscKeydown,
+  onPointerDown,
+} from '../helpers/common';
+
+let isToastrOpen = false;
 
 function showToastr(id, timeout = false, errorMesssage = null) {
   const toastrNode = getElementFromTemplate(id);
 
-  const overlayConfig = {
-    overlay: toastrNode,
-    content: toastrNode.firstElementChild,
-    onEscKeydown: close,
-    onClickOutside: close,
+  const onToastrEscKeydown = (evt) => {
+    onEscKeydown(evt, onToastrClose);
+  };
+
+  const onToastrClickOutside = (evt) => {
+    onPointerDown(evt, toastrNode, toastrNode.firstElementChild, onToastrClose);
   };
 
   document.body.append(toastrNode);
@@ -27,14 +33,21 @@ function showToastr(id, timeout = false, errorMesssage = null) {
 
   const button = toastrNode.querySelector('button');
 
-  button.addEventListener('click', close);
-  registerEscHandler(overlayConfig);
+  isToastrOpen = true;
 
-  function close() {
-    button.removeEventListener('click', close);
-    unregisterEscHandler(overlayConfig);
+  button.addEventListener('click', onToastrClose);
+  document.addEventListener('keydown', onToastrEscKeydown);
+  document.addEventListener('click', onToastrClickOutside);
+
+  function onToastrClose() {
+    document.removeEventListener('keydown', onToastrEscKeydown);
+    document.removeEventListener('click', onToastrClickOutside);
+    button.removeEventListener('click', onToastrClose);
     toastrNode.remove();
+    isToastrOpen = false;
   }
 }
 
-export { showToastr };
+const getIsToastrOpen = () => isToastrOpen;
+
+export { showToastr, getIsToastrOpen };
