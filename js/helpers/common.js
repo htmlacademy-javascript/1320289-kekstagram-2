@@ -1,4 +1,4 @@
-import { ESC_KEYCODE } from './consts';
+import { DEBOUNCE_TIMEOUT, ESC_KEYCODE } from './consts';
 
 const createFragment = () => document.createDocumentFragment();
 
@@ -10,7 +10,7 @@ const getElementFromTemplate = (selector) =>
 
 const isEscKeyCode = (evt) => evt.keyCode === ESC_KEYCODE;
 
-const debounce = (cb, timeout = 500) => {
+const debounce = (cb, timeout = DEBOUNCE_TIMEOUT) => {
   let timeoutId;
 
   return (...rest) => {
@@ -19,4 +19,12 @@ const debounce = (cb, timeout = 500) => {
   };
 };
 
-export { createFragment, getElementFromTemplate, isEscKeyCode, debounce };
+const resetForm = (formNode) => formNode.reset();
+
+export {
+  createFragment,
+  getElementFromTemplate,
+  isEscKeyCode,
+  debounce,
+  resetForm,
+};
