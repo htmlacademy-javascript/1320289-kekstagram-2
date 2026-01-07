@@ -50,14 +50,15 @@ modal.setOnOpen(() => {
 });
 
 modal.addHandler(fieldsNode, 'input', onFieldInput);
-modal.addHandler(formNode, 'submit', (evt) => onFormSubmit(evt, modal.close));
+modal.addHandler(formNode, 'submit', (evt) =>
+  onFormSubmit(evt, modal.onModalClose),
+);
 modal.addHandler(scaleDecreaseNode, 'click', decreaseScale);
 modal.addHandler(scaleIncreaseNode, 'click', increaseScale);
 modal.addHandler(effectsNode, 'change', (evt) => {
   onEffectChange(evt, updateSlider, updateSliderVisibility);
 });
 
-const openModal = modal.open;
-const closeModal = modal.close;
+const openModal = modal.onModalOpen;
 
-export { openModal, closeModal, resetForm };
+export { openModal, resetForm };
