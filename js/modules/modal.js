@@ -1,4 +1,5 @@
-import { registerEscHandler, unregisterEscHandler } from './overlay-manager';
+import { onEscKeydown, onPointerDown } from '../helpers/common';
+import { getIsToastrOpen } from './toastr';
 
 let handlerIdCounter = 0;
 
@@ -6,21 +7,31 @@ function createModal(modalNode, closeNode) {
   const body = document.body;
   const handlers = new Map();
 
-  const overlayConfig = {
-    overlay: modalNode,
-    content: modalNode.firstElementChild,
-    onEscKeydown: close,
-    onClickOutside: close,
-  };
-
   const callbacks = {
     onOpen: null,
     onClose: null,
   };
 
-  function close() {
-    unregisterEscHandler(overlayConfig);
-    closeNode.removeEventListener('click', close);
+  const onModalEscKeydown = (evt) => {
+    if (getIsToastrOpen()) {
+      return;
+    }
+
+    onEscKeydown(evt, onModalClose);
+  };
+
+  const onModalClickOutside = (evt) => {
+    if (getIsToastrOpen()) {
+      return;
+    }
+
+    onPointerDown(evt, modalNode, modalNode.firstElementChild, onModalClose);
+  };
+
+  function onModalClose() {
+    document.removeEventListener('keydown', onModalEscKeydown);
+    document.removeEventListener('click', onModalClickOutside);
+    closeNode.removeEventListener('click', onModalClose);
 
     handlers.forEach(({ element, event, handler }) => {
       element.removeEventListener(event, handler);
@@ -32,9 +43,10 @@ function createModal(modalNode, closeNode) {
     callbacks.onClose?.();
   }
 
-  function open() {
-    registerEscHandler(overlayConfig);
-    closeNode.addEventListener('click', close);
+  function onModalOpen() {
+    document.addEventListener('keydown', onModalEscKeydown);
+    document.addEventListener('click', onModalClickOutside);
+    closeNode.addEventListener('click', onModalClose);
 
     handlers.forEach(({ element, event, handler }) => {
       element.addEventListener(event, handler);
@@ -67,8 +79,8 @@ function createModal(modalNode, closeNode) {
   }
 
   return {
-    open,
-    close,
+    onModalOpen,
+    onModalClose,
     addHandler,
     setOnOpen,
     setOnClose,

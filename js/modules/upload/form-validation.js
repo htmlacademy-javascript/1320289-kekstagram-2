@@ -14,7 +14,7 @@ const parseHashtags = (value) => (value ? value.trim().split(/\s+/) : []);
 const validations = [
   {
     node: hashtagsNode,
-    validation: (value) => {
+    validate: (value) => {
       const tags = parseHashtags(value);
       return !tags.length || tags.every((tag) => /^#[a-zа-яё0-9]+$/i.test(tag));
     },
@@ -22,7 +22,7 @@ const validations = [
   },
   {
     node: hashtagsNode,
-    validation: (value) => {
+    validate: (value) => {
       const tags = parseHashtags(value);
       return !tags.length || tags.every((tag) => tag.length <= HASHTAGS.LENGTH);
     },
@@ -30,12 +30,12 @@ const validations = [
   },
   {
     node: hashtagsNode,
-    validation: (value) => parseHashtags(value).length <= HASHTAGS.COUNT,
+    validate: (value) => parseHashtags(value).length <= HASHTAGS.COUNT,
     error: `Максимум может быть ${HASHTAGS.COUNT} хэштегов`,
   },
   {
     node: hashtagsNode,
-    validation: (value) => {
+    validate: (value) => {
       const tags = parseHashtags(value).map((tag) => tag.toLowerCase());
       return tags.length === new Set(tags).size;
     },
@@ -43,13 +43,13 @@ const validations = [
   },
   {
     node: hashtagsNode,
-    validation: (value) =>
+    validate: (value) =>
       !value || (!/##/.test(value) && !/[^#\s]#/.test(value)),
     error: 'Хештеги должны разделяться пробелами',
   },
   {
     node: commentsNode,
-    validation: (value) => !value || value.length <= COMMENT_LENGTH,
+    validate: (value) => !value || value.length <= COMMENT_LENGTH,
     error: `Длина комментария не должна превышать ${COMMENT_LENGTH}`,
   },
 ];
@@ -66,8 +66,8 @@ const createPristine = () => {
     false,
   );
 
-  validations.forEach(({ node, validation, error }, index) => {
-    pristine.addValidator(node, validation, error, index, false);
+  validations.forEach(({ node, validate, error }, index) => {
+    pristine.addValidator(node, validate, error, index, false);
   });
 };
 
